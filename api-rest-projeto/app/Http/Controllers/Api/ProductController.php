@@ -92,14 +92,38 @@ class ProductController extends Controller
      */
     public function update(StoreProductRequest $request, Product $product)
     {
-
         try {
-            $product->update($request->validated());
-            return response()->json(['message' => 'Produto Atualizado com sucesso', 'data' => new ProductResource($product)], 200);
+            $validatedData = $request->validated();
+    
+            if ($request->hasFile('image')) {
+                // Obtém o arquivo
+                $file = $request->file('image');
+    
+                // Gera um nome único para a imagem
+                $imageName = time() . '_' . $file->getClientOriginalName();
+    
+                // Salva a imagem na pasta 'public/storage/images'
+                $path = $file->storeAs('images', $imageName, 'public');
+    
+                // Adiciona o caminho da imagem nos dados validados
+                $validatedData['image'] = '/storage/' . $path; // Caminho correto para acessar a imagem
+            }
+    
+            // Atualiza o produto existente em vez de criar um novo
+            $product->update($validatedData);
+    
+            return response()->json([
+                'message' => 'Produto atualizado com sucesso', 
+                'data' => new ProductResource($product)
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Erro ao Atualizar o produto', 'error' => $e->getMessage()], 500);
+            return response()->json([
+                'message' => 'Erro ao atualizar o produto', 
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
+    
 
     /**
      * Remove the specified resource from storage.
