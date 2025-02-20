@@ -12,3 +12,4 @@ Route::apiResource('products',ProductController::class)->except(
         'create',
     ]
     );
+Route::get('/products/type', [ProductController::class, 'findByType']); // Adiciona esta linha

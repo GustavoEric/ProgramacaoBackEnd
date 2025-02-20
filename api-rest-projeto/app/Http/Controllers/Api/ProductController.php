@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\StoreProductRequest;
@@ -18,6 +17,23 @@ class ProductController extends Controller
     {
         $products = Product::all();
         return ProductResource::collection($products);
+    }
+    public function findByType(Request $request)
+    {
+        dd('Chegou Aqui');
+        // $type = $request->input('type');
+
+        // if (!$type) {
+        //     return response()->json(['message' => 'O tipo do produto é obrigatório.'], 400);
+        // }
+    
+        // $produtos = Product::where('type', $type)->get();
+    
+        // if ($produtos->isEmpty()) {
+        //     return response()->json(['message' => 'Nenhum produto encontrado.'], 404);
+        // }
+    
+        // return ProductResource::collection($produtos);
     }
 
     /**
