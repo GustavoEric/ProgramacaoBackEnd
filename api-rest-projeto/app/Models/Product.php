@@ -10,9 +10,4 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['name','price','size','type','description','image'];
 
-    // Criando um Query Scope
-    public function scopePorTipo($query, string $type)
-    {
-        return $query->where('type', $type);
-    }
 }

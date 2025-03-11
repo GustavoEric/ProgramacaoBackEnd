@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
-use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,20 +20,21 @@ class ProductController extends Controller
     }
     public function findByType(Request $request)
     {
-        dd('Chegou Aqui');
-        // $type = $request->input('type');
+        $request->validate([
+            'type' => 'required|string'
+        ]);
 
-        // if (!$type) {
-        //     return response()->json(['message' => 'O tipo do produto é obrigatório.'], 400);
-        // }
-    
-        // $produtos = Product::where('type', $type)->get();
-    
-        // if ($produtos->isEmpty()) {
-        //     return response()->json(['message' => 'Nenhum produto encontrado.'], 404);
-        // }
-    
-        // return ProductResource::collection($produtos);
+        // Busca direta no modelo
+        $products = Product::where('type', $request->type)->get();
+
+        // Tratamento para nenhum resultado
+        if ($products->isEmpty()) {
+            return response()->json([
+                'message' => 'Nenhum produto encontrado para o tipo "' . $request->type . '"'
+            ], 404);
+        }
+
+        return response()->json(['data'=>$products]);
     }
 
     /**
@@ -47,7 +48,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(ProductRequest $request)
     {
         try {
             // Obtém os dados validados
@@ -106,7 +107,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         try {
             $validatedData = $request->validated();
