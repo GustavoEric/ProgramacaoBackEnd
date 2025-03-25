@@ -5,27 +5,14 @@ console.log(divContent);
 async function BuscarPokemons(){
 
     const url = "https://pokeapi.co/api/v2/pokemon/";
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    console.log(json.results);
-    json.results.forEach(pokemon => {
-        // console.log(pokemon)
-        // divContent.innerHTML += `<div class="col-span-3"><a href=${pokemon.url}><h1>${pokemon.name}</h1></a></div>`
-        InformacoesPokemon(pokemon.url)
-    });
-  } catch (error) {
-    console.error(error.message);
+    for(let i=1;i<=251;i++){
+    InformacoesPokemon(url,i)
   }
 }
-async function InformacoesPokemon(url){
+async function InformacoesPokemon(url,id){
     console.log(url)
     try {
-      const response = await fetch(url);
+      const response = await fetch(url+id);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }
