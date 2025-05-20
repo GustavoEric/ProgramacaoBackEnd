@@ -27,7 +27,8 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string'],
             'phone' => ['required', 'string'],
             'email' => ['required', 'string'],
-            'password' => ['required', 'string']
+            'password' => ['required', 'string'],
+            'nivel_acesso' => ['nullable','integer']
         ];
     }
 }

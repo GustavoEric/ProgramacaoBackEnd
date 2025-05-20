@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('phone'); // Telefone do usuário
             $table->string('email')->unique(); // Email do usuário
             $table->string('password'); // Senha do usuário
+            $table->integer('nivel_acesso')->default(1);;
         });
     }
 

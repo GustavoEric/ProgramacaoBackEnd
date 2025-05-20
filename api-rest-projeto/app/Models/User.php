@@ -9,7 +9,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Model
 {
     use HasFactory,HasApiTokens;
-    protected $fillable = ['address_id', 'cpf', 'name', 'phone', 'email', 'password'];
+    protected $fillable = ['address_id', 'cpf', 'name', 'phone', 'email', 'password','nivel_acesso'];
 
     public $timestamps = false;
 }

@@ -43,7 +43,7 @@ class UserController extends Controller
 
         // Se o usuário não existe ou a senha está incorreta
         if (!$user || !Hash::check($validated['password'], $user->password)) {
-            return response()->json(['message' => 'Credenciais inválidas.'], 401);
+            return response()->json(['message' => 'Credenciais inválidas. '], 401);
         }
 
         // Cria um token para o usuário
@@ -52,7 +52,8 @@ class UserController extends Controller
         // Retorna o token no response
         return response()->json([
             'message' => 'Login bem-sucedido.',
-            'token' => $token
+            'token' => $token,
+            'nivel_acesso' => $user->nivel_acesso
         ]);
     }
     public function store(UserRequest $request)
